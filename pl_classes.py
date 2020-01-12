@@ -12,7 +12,6 @@ class ParkingLot:
         return None
 
     def leave(self, spot_number):
-        print(list(self.parking_lot_spaces.keys()))
         if int(spot_number) in list(self.parking_lot_spaces.keys()): 
             self.parking_lot_spaces[int(spot_number)] = None
             return True
@@ -22,6 +21,8 @@ class ParkingLot:
     def find_matches(self, s, vehicle_attr, search_for):
         matches = []
         for slot in sorted(self.parking_lot_spaces.keys()):
+            if self.parking_lot_spaces[slot] == None:
+                continue
             if getattr(self.parking_lot_spaces[slot], vehicle_attr) == s:
                 if search_for == "slot":
                     matches.append(slot)

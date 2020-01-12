@@ -1,6 +1,6 @@
 import unittest, io
 from contextlib import redirect_stdout
-from pl_shell import ParkingLotShell
+from pl_shell import ParkingLotShell, print_match_results
 
 ERROR_MSG_1 = "g with vehicles"  # These are the endings of the messages created in decorators.py 
 ERROR_MSG_2 = "on this command"
@@ -68,6 +68,61 @@ class TestShellMethods(unittest.TestCase):
         print_out = get_print_results(pls.onecmd, "status")
         expected_results = "Slot No.\nRegistration No\nColour\n1\nAK-01-HH-1234\nWhite"
         self.assertEqual(print_out, expected_results)
+
+    def test_do_registration_numbers_for_cars_with_colour(self):
+        pls = ParkingLotShell()
+        pls.onecmd("create_parking_lot 2")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "registration_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out, "AK-01-HH-1234")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "registration_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out, "AK-01-HH-1234, AK-01-HH-1234")
+        print_out = get_print_results(pls.onecmd, "registration_numbers_for_cars_with_colour Blackish")
+        self.assertEqual(print_out, "Not found")
+
+    def test_do_registration_numbers_for_cars_with_colour_errors(self):
+        pls = ParkingLotShell()
+        print_out = get_print_results(pls.onecmd, "registration_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out[-15:], ERROR_MSG_1)
+
+    def test_do_slot_numbers_for_cars_with_colour(self):
+        pls = ParkingLotShell()
+        pls.onecmd("create_parking_lot 2")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "slot_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out, "1")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "slot_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out, "1, 2")
+        print_out = get_print_results(pls.onecmd, "slot_numbers_for_cars_with_colour Blackish")
+        self.assertEqual(print_out, "Not found")
+
+    def test_do_slot_numbers_for_cars_with_colour_errors(self):
+        pls = ParkingLotShell()
+        print_out = get_print_results(pls.onecmd, "slot_numbers_for_cars_with_colour White")
+        self.assertEqual(print_out[-15:], ERROR_MSG_1)
+
+    def test_do_slot_number_for_registration_number(self):
+        pls = ParkingLotShell()
+        pls.onecmd("create_parking_lot 2")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "slot_number_for_registration_number AK-01-HH-1234")
+        self.assertEqual(print_out, "1")
+        pls.onecmd("park AK-01-HH-1234 White")
+        print_out = get_print_results(pls.onecmd, "slot_number_for_registration_number AK-01-HH-1234")
+        self.assertEqual(print_out, "1, 2")
+        print_out = get_print_results(pls.onecmd, "slot_number_for_registration_number AK-01-HH-12345")
+        self.assertEqual(print_out, "Not found")
+
+    def test_do_slot_number_for_registration_number_errors(self):
+        pls = ParkingLotShell()
+        print_out = get_print_results(pls.onecmd, "slot_number_for_registration_number White")
+        self.assertEqual(print_out[-15:], ERROR_MSG_1)
+
+    def test_print_match_results(self):
+        self.assertEqual(get_print_results(print_match_results,[]),"Not found")
+        self.assertEqual(get_print_results(print_match_results,["1","2","3"]),"1, 2, 3")
 
 def get_print_results(f,*args,**kwargs):
     out = io.StringIO()

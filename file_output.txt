@@ -5,7 +5,6 @@ Allocated slot number: 3
 Allocated slot number: 4
 Allocated slot number: 5
 Allocated slot number: 6
-[1, 2, 3, 4, 5, 6]
 Slot number 4 is free
 Slot No.    Registration No    Colour
 1    KA-01-HH-1234    White
@@ -15,7 +14,7 @@ Slot No.    Registration No    Colour
 6    KA-01-HH-3141    Black
 Allocated slot number: 4
 Sorry, parking lot is full
-*** Unknown syntax: registration_numbers_for_cars_with_colour White
-*** Unknown syntax: slot_numbers_for_cars_with_colour White
-*** Unknown syntax: slot_number_for_registration_number KA-01-HH-3141
-*** Unknown syntax: slot_number_for_registration_number MH-04-AY-1111
+KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333
+1, 2, 4
+6
+Not found
