@@ -43,11 +43,11 @@ class TestShellMethods(unittest.TestCase):
         pls = ParkingLotShell()
         pls.onecmd("create_parking_lot 1")
         print_out = get_print_results(pls.onecmd, "leave 1")
-        self.assertEqual(print_out[4:], "Slot number 1 is free")
+        self.assertEqual(print_out, "Slot number 1 is free")
         print_out = get_print_results(pls.onecmd, "leave 2")
-        self.assertEqual(print_out[4:], "That slot doesn't exist in this parking lot")
+        self.assertEqual(print_out, "That slot doesn't exist in this parking lot")
         print_out = get_print_results(pls.onecmd, "leave 0")
-        self.assertEqual(print_out[4:], "That slot doesn't exist in this parking lot")
+        self.assertEqual(print_out, "That slot doesn't exist in this parking lot")
 
     def test_do_leave_errors(self):
         pls = ParkingLotShell()
