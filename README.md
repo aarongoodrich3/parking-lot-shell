@@ -7,5 +7,5 @@ To run the shell, use "python3 pl_shell.py" at the base of the project
 To use a file filled with input commands, use "python3 pl_shell.py file_inputs.txt > file_output.txt"  
 To run tests, use "python3 -m unittest discover -v" at the base of the project  
 
-There were no clear requirements for exception handing, but it was important to handle them in some way. The default behavior from an exception was to throw the user out of the shell.  This causes workflow to be interupted, and all memory of the objects to be forgotten, as all data is held within the python objects with no persistance outside of the program.  My solution was to simply wrap the commands in a general exception hander, which refers the user to documentation for correct usage.  I didn't implement traceback logging, but this would probably be a good idea.
+There were no clear requirements for exception handing, but it was important to handle them in some way. The default behavior from an exception was to throw the user out of the shell.  This causes workflow to be interupted, and all memory of the objects to be forgotten, as all data is held within the python objects with no persistance outside of the program.  My solution was to simply wrap the commands in a general exception hander, which refers the user to documentation for correct usage.
 
