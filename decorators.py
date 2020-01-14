@@ -1,6 +1,8 @@
 from functools import wraps
 
 def exception_decorator(f):
+    '''Catches all exceptions and prints them to sysout along with help suggestion'''
+    
     @wraps(f)
     def wrapped(*args, **kwargs):
         try:
