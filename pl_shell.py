@@ -3,6 +3,8 @@ import cmd, sys
 from decorators import exception_decorator
 from pl_classes import ParkingLot, Vehicle
 
+FILE_OUTPUT = False
+
 class ParkingLotShell(cmd.Cmd):
     '''cmd module subclass used for a CLI for issuing parking lot management commands'''
     intro = "Welcome to the Parking Lot Shell. For detailed information on available commands, type 'help' into the prompt.\n"\
@@ -60,12 +62,9 @@ class ParkingLotShell(cmd.Cmd):
     @exception_decorator
     def do_status(self, s):
         '''Prints vehicle information on all occupied slots. Invoked with status command in CLI'''
-        try:
-            if FILE_OUTPUT:
-                status_delimiter = "    "
-            else:
-                status_delimiter = "\n"
-        except NameError:
+        if FILE_OUTPUT:
+            status_delimiter = "    "
+        else:
             status_delimiter = "\n"
         print(f"Slot No.{status_delimiter}Registration No{status_delimiter}Colour")
         for slot in sorted(self.parking_lot.parking_lot_spaces.keys()):
@@ -128,7 +127,6 @@ def print_match_results(matches):
 if __name__ == '__main__':
     pl_shell = ParkingLotShell()
     if len(sys.argv) == 1:
-        FILE_OUTPUT = False
         pl_shell.cmdloop()
     else:
         FILE_OUTPUT = True

@@ -1,6 +1,6 @@
 import unittest, io
 from contextlib import redirect_stdout
-from pl_shell import ParkingLotShell, print_match_results
+from pl_shell import ParkingLotShell, print_match_results, FILE_OUTPUT
 
 ERROR_MSG_1 = "g with vehicles"  # These are the endings of the messages created in decorators.py 
 ERROR_MSG_2 = "on this command"
@@ -141,7 +141,7 @@ class TestShellMethods(unittest.TestCase):
         self.assertEqual(print_out[-15:], ERROR_MSG_1)
 
     def test_print_match_results(self):
-       '''Ensures correct messages are printed when print_match_results is called'''
+        '''Ensures correct messages are printed when print_match_results is called'''
         self.assertEqual(get_print_results(print_match_results,[]),"Not found")
         self.assertEqual(get_print_results(print_match_results,["1","2","3"]),"1, 2, 3")
 
